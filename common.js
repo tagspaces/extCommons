@@ -12,7 +12,65 @@ $(document).ready(function() {
   isCordova = parent.isCordova;
   isWin = parent.isWin;
   isWeb = parent.isWeb;
-  
+
+// Disable drag events in extensions
+  $(document).on('drop dragend dragenter dragover', function(event) {
+    event.preventDefault();
+  });
+
+// Hide all menus in TS on click in extension
+  $(document).on('click' , function(event) {
+    fireHideAllMenusEvent();
+  });
+
+  function fireHideAllMenusEvent() {
+    var msg = {command: "hideAllMenus"};
+    window.parent.postMessage(JSON.stringify(msg), "*");
+  }
+
+// Init about box functionality
+  $('#aboutExtensionModal').on('show.bs.modal', function() {
+    $.ajax({
+      url: 'README.md',
+      type: 'GET'
+    }).done(function(mdData) {
+      //console.log("DATA: " + mdData);
+      if (marked) {
+        var modalBody = $("#aboutExtensionModal .modal-body");
+        modalBody.html(marked(mdData, {sanitize: true}));
+        handleLinks(modalBody);
+      } else {
+        console.log("markdown to html transformer not found");
+      }
+    }).fail(function(data) {
+      console.warn("Loading file failed " + data);
+    });
+  });
+
+  function handleLinks($element) {
+    $element.find("a[href]").each(function() {
+      var currentSrc = $(this).attr("href");
+      $(this).bind('click', function(e) {
+        e.preventDefault();
+        var msg = {command: "openLinkExternally", link: currentSrc};
+        window.parent.postMessage(JSON.stringify(msg), "*");
+      });
+    });
+  }
+
+  $("#aboutButton").on("click", function(e) {
+    $("#aboutExtensionModal").modal({show: true});
+  });
+
+// Activating the print functionality
+  $("#printButton").on("click", function(e) {
+    window.print();
+  });
+
+  if (isCordova) {
+    $("#printButton").hide();
+  }
+
   initSearch();
 });
 
