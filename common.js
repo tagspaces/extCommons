@@ -110,8 +110,11 @@ function initSearch() {
 
   $('#searchBox').keyup(function(e) {
     if (e.keyCode === 13) { // Start the search on ENTER
-      doSearch();
-    } else if (e.keyCode == 27) { // Hide search on ESC
+      doSearch();}
+  });
+
+  $(window).keyup(function(e) {
+    if (e.keyCode == 27) { // Hide search on ESC
       cancelSearch();
     }
   });
