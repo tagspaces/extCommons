@@ -62,6 +62,10 @@ $(document).ready(function() {
     $("#aboutExtensionModal").modal({show: true});
   });
 
+  $(".roundButton").on("click", function(e) {
+    fireHideAllMenusEvent();
+  });
+
 // Activating the print functionality
   $("#printButton").on("click", function(e) {
     window.print();
@@ -90,7 +94,7 @@ function showSearchPanel(e) {
 
 function cancelSearch() {
   //$('#searchToolbar').slideUp(500);
-  $('#htmlContent').unhighlight();
+  //$('#htmlContent').unhighlight();
   $('#searchToolbar').hide();
   //$('#searchBox').hide();
 }
@@ -192,7 +196,7 @@ function initSearch() {
 }
 
 function doSearch() {
-  $('#htmlContent').unhighlight();
+  //$('#htmlContent').unhighlight();
   $('#searchBox').attr('placeholder', 'Search');
   var givenString = document.getElementById("searchBox").value;
 
@@ -216,7 +220,7 @@ function doSearch() {
     }
     if (!found || (!found && !caseSensitiveString) || !caseSensitiveString) {
       var topOfContent = $(selector).animate({scrollTop: $('#htmlContent').offset().top}, "fast");
-      $('#htmlContent').unhighlight();
+      //$('#htmlContent').unhighlight();
       $('#searchBox').val('');
       $('#searchBox').attr('placeholder', 'Search text not found. Try again.');
       return topOfContent;

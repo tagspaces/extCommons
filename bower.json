@@ -1,6 +1,6 @@
 {
-  "name": "extCommons",
-  "id": "extCommons",
+  "name": "ts-commons",
+  "id": "extCommon",
   "description": "A TagSpaces helper library with common functionalities in extensions",
   "version": "0.0.3",
   "dependencies": {},
