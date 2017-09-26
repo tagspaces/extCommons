@@ -1,0 +1,12 @@
+{
+  "name": "tagspaces-commons",
+  "version": "0.0.1",
+  "description": "TagSpaces Commons",
+  "homepage": "https://www.tagspaces.org",
+  "author": {
+    "name": "TagSpaces UG",
+    "email": "info@tagspaces.org",
+    "url": "https://www.tagspaces.org"
+  },
+  "license": "MIT"
+}
