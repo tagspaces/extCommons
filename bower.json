@@ -11,7 +11,9 @@
     "mousetrap": "~1.5.3",
     "marked": "~0.3.6",
     "i18next": "~8.1.0",
-    "jquery-i18next": "~1.2.1"
+    "jquery-i18next": "~1.2.1",
+    "readability": "https://github.com/mozilla/readability.git#master",
+    "dompurify": "~1.0.3"
   },
   "devDependencies": {},
   "authors": [
