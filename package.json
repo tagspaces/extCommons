@@ -1,7 +1,7 @@
 {
-  "name": "tagspaces-commons",
-  "version": "0.0.1",
-  "description": "TagSpaces Commons",
+  "name": "@tagspaces/legacy-ext",
+  "version": "1.0.0",
+  "description": "Providing support for legacy TagSpaces extensions",
   "homepage": "https://www.tagspaces.org",
   "author": {
     "name": "TagSpaces UG",
