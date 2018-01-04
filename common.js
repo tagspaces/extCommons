@@ -42,6 +42,14 @@ function getFileContentPromise(fullPath, type) {
   });
 }
 
+function sendMessageToHost(message) {
+  if (typeof sendToParent === "function") {
+    sendToParent(message);
+  } else {
+    window.parent.postMessage(JSON.stringify(message), '*');
+  }
+}
+
 $(document).ready(function() {
   isCordova = parent.isCordova;
   isWin = parent.isWin;
