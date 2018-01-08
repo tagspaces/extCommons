@@ -3,8 +3,7 @@
 
 'use strict';
 
-var isCordova;
-var isWin;
+var isCordova = (document.URL.indexOf('file:///android_asset') === 0); // TODO consider ios case
 var isWeb = (document.URL.startsWith('http') && !document.URL.startsWith('http://localhost:1212/'));
 
 function getParameterByName(name) {
@@ -51,10 +50,6 @@ function sendMessageToHost(message) {
 }
 
 $(document).ready(function() {
-  isCordova = parent.isCordova;
-  isWin = parent.isWin;
-  isWeb = parent.isWeb;
-
   // Disable drag events in extensions
   $(document).on('drop dragend dragenter dragover', function(event) {
     event.preventDefault();
