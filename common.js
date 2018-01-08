@@ -67,7 +67,7 @@ $(document).ready(function() {
 
   function fireHideAllMenusEvent() {
     var msg = { command: 'hideAllMenus' };
-    window.parent.postMessage(JSON.stringify(msg), '*');
+    sendMessageToHost(msg);
   }
 
   // Init about box functionality
@@ -97,7 +97,7 @@ $(document).ready(function() {
       $(this).bind('click', function(e) {
         e.preventDefault();
         var msg = { command: 'openLinkExternally', link: currentSrc };
-        window.parent.postMessage(JSON.stringify(msg), '*');
+        sendMessageToHost(msg);
       });
     });
   }
