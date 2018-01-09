@@ -20,10 +20,6 @@ function getFileContentPromise(fullPath, type) {
   return new Promise((resolve, reject) => {
     let fileURL = fullPath;
 
-    // TODO checks if works on cordova and web
-    if (fileURL.indexOf('file://') === -1) {
-      fileURL = 'file://' + fileURL;
-    }
     const xhr = new XMLHttpRequest();
     xhr.open('GET', fileURL, true);
     xhr.responseType = type || 'arraybuffer';
