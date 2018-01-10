@@ -73,6 +73,18 @@ function initI18N(locale, filename) {
     .catch(error => console.log('Error getting default i18n locale: ' + error));
 }
 
+function getBase64Image(imgURL) {
+  var canvas = document.createElement('canvas');
+  var img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.src = imgURL;
+  canvas.width = img.width;
+  canvas.height = img.height;
+  var ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0);
+  return canvas.toDataURL('image/png');
+}
+
 function sendMessageToHost(message) {
   if (typeof sendToParent === 'function') {
     sendToParent(message);
