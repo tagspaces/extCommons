@@ -3,8 +3,10 @@
 
 'use strict';
 
-var isCordova = (document.URL.indexOf('file:///android_asset') === 0); // TODO consider ios case
-var isWeb = (document.URL.startsWith('http') && !document.URL.startsWith('http://localhost:1212/'));
+const isCordova = document.URL.indexOf('file:///android_asset') === 0; // TODO consider ios case
+const isWeb =
+  document.URL.startsWith('http') &&
+  !document.URL.startsWith('http://localhost:1212/');
 
 function getParameterByName(name) {
   name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
@@ -42,6 +44,7 @@ function initI18N(locale, filename) {
     .then(enLocale => {
       var i18noptions = {
         lng: locale,
+        // debug: true,
         resources: {},
         fallbackLng: 'en_US'
       };
@@ -70,7 +73,7 @@ function initI18N(locale, filename) {
 }
 
 function sendMessageToHost(message) {
-  if (typeof sendToParent === "function") {
+  if (typeof sendToParent === 'function') {
     sendToParent(message);
   } else {
     window.parent.postMessage(JSON.stringify(message), '*');
