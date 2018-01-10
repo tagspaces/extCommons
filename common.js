@@ -37,6 +37,38 @@ function getFileContentPromise(fullPath, type) {
   });
 }
 
+function initI18N(locale, filename) {
+  getFileContentPromise('./locales/en_US/' + filename, 'text') // loading fallback lng
+    .then(enLocale => {
+      var i18noptions = {
+        lng: locale,
+        resources: {},
+        fallbackLng: 'en_US'
+      };
+      i18noptions.resources['en_US'] = {};
+      i18noptions.resources['en_US'].translation = JSON.parse(enLocale);
+      getFileContentPromise('./locales/' + locale + '/' + filename, 'text')
+        .then(content => {
+          i18noptions.resources[locale] = {};
+          i18noptions.resources[locale].translation = JSON.parse(content);
+          i18next.init(i18noptions, () => {
+            jqueryI18next.init(i18next, $); // console.log(i18next.t('startSearch'));
+            $('body').localize();
+          });
+          return true;
+        })
+        .catch(error => {
+          console.log('Error getting specific i18n locale: ' + error);
+          i18next.init(i18noptions, () => {
+            jqueryI18next.init(i18next, $); // console.log(i18next.t('startSearch'));
+            $('body').localize();
+          });
+        });
+      return true;
+    })
+    .catch(error => console.log('Error getting default i18n locale: ' + error));
+}
+
 function sendMessageToHost(message) {
   if (typeof sendToParent === "function") {
     sendToParent(message);
