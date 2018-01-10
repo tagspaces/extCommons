@@ -3,10 +3,11 @@
 
 'use strict';
 
-const isCordova = document.URL.indexOf('file:///android_asset') === 0; // TODO consider ios case
-const isWeb =
+var isCordova = document.URL.indexOf('file:///android_asset') === 0; // TODO consider ios case
+var isWeb =
   document.URL.startsWith('http') &&
   !document.URL.startsWith('http://localhost:1212/');
+var isWin;
 
 function getParameterByName(name) {
   name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
