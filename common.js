@@ -3,11 +3,12 @@
 
 'use strict';
 
-var isCordova = document.URL.indexOf('file:///android_asset') === 0; // TODO consider ios case
-var isWeb =
+const isCordova = document.URL.indexOf('file:///android_asset') === 0; // TODO consider ios case
+// isCordovaiOS: /^file:\/{3}[^\/]/i.test(window.location.href) && /ios|iphone|ipod|ipad/i.test(navigator.userAgent),
+const isWeb =
   document.URL.startsWith('http') &&
   !document.URL.startsWith('http://localhost:1212/');
-var isWin;
+const isWin = navigator.appVersion.includes('Win');
 
 function getParameterByName(name) {
   name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
@@ -100,14 +101,14 @@ $(document).ready(function() {
   });
 
   // Hide all menus in TS on click in extension
-  $(document).on('click', function(event) {
+  /* $(document).on('click', function(event) {
     fireHideAllMenusEvent();
   });
 
   function fireHideAllMenusEvent() {
     var msg = { command: 'hideAllMenus' };
     sendMessageToHost(msg);
-  }
+  } */
 
   // Init about box functionality
   $('#aboutExtensionModal').on('show.bs.modal', function() {
