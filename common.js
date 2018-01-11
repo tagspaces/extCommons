@@ -1,6 +1,8 @@
 /* Copyright (c) 2013-present The TagSpaces Authors.
  * Use of this source code is governed by the MIT license which can be found in the LICENSE.txt file. */
 
+/* globals marked, sendToParent, $, i18next */
+
 'use strict';
 
 const isCordova = document.URL.indexOf('file:///android_asset') === 0; // TODO consider ios case
@@ -10,11 +12,10 @@ const isWeb =
   !document.URL.startsWith('http://localhost:1212/');
 const isWin = navigator.appVersion.includes('Win');
 
-function getParameterByName(name) {
-  name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-  var regex = new RegExp('[\\?&]' + name + '=([^&#]*)'),
-    results = regex.exec(location.search);
-
+function getParameterByName(paramName) {
+  const name = paramName.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+  const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+  const results = regex.exec(location.search);
   return results === null
     ? ''
     : decodeURIComponent(results[1].replace(/\+/g, ' '));
@@ -22,7 +23,7 @@ function getParameterByName(name) {
 
 function getFileContentPromise(fullPath, type) {
   return new Promise((resolve, reject) => {
-    let fileURL = fullPath;
+    const fileURL = fullPath;
 
     const xhr = new XMLHttpRequest();
     xhr.open('GET', fileURL, true);
@@ -44,7 +45,7 @@ function getFileContentPromise(fullPath, type) {
 function initI18N(locale, filename) {
   getFileContentPromise('./locales/en_US/' + filename, 'text') // loading fallback lng
     .then(enLocale => {
-      var i18noptions = {
+      const i18noptions = {
         lng: locale,
         // debug: true,
         resources: {},
@@ -75,13 +76,13 @@ function initI18N(locale, filename) {
 }
 
 function getBase64Image(imgURL) {
-  var canvas = document.createElement('canvas');
-  var img = new Image();
+  const canvas = document.createElement('canvas');
+  const img = new Image();
   img.crossOrigin = 'anonymous';
   img.src = imgURL;
   canvas.width = img.width;
   canvas.height = img.height;
-  var ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d');
   ctx.drawImage(img, 0, 0);
   return canvas.toDataURL('image/png');
 }
@@ -94,9 +95,9 @@ function sendMessageToHost(message) {
   }
 }
 
-$(document).ready(function() {
+$(document).ready(() => {
   // Disable drag events in extensions
-  $(document).on('drop dragend dragenter dragover', function(event) {
+  $(document).on('drop dragend dragenter dragover', event => {
     event.preventDefault();
   });
 
@@ -111,47 +112,46 @@ $(document).ready(function() {
   } */
 
   // Init about box functionality
-  $('#aboutExtensionModal').on('show.bs.modal', function() {
+  $('#aboutExtensionModal').on('show.bs.modal', () => {
     $.ajax({
       url: 'README.md',
       type: 'GET'
     })
-      .done(function(mdData) {
-        //console.log("DATA: " + mdData);
+      .done(mdData => {
+        // console.log("DATA: " + mdData);
         if (marked) {
-          var modalBody = $('#aboutExtensionModal .modal-body');
+          const modalBody = $('#aboutExtensionModal .modal-body');
           modalBody.html(marked(mdData, { sanitize: true }));
           handleLinks(modalBody);
         } else {
           console.log('markdown to html transformer not found');
         }
       })
-      .fail(function(data) {
+      .fail(data => {
         console.warn('Loading file failed ' + data);
       });
   });
 
   function handleLinks($element) {
-    $element.find('a[href]').each(function() {
-      var currentSrc = $(this).attr('href');
-      $(this).bind('click', function(e) {
+    $element.find('a[href]').each(() => {
+      const currentSrc = $(this).attr('href');
+      $(this).bind('click', e => {
         e.preventDefault();
-        var msg = { command: 'openLinkExternally', link: currentSrc };
+        const msg = { command: 'openLinkExternally', link: currentSrc };
         sendMessageToHost(msg);
       });
     });
   }
 
-  $('#aboutButton').on('click', function(e) {
+  $('#aboutButton').on('click', () => {
     $('#aboutExtensionModal').modal({ show: true });
   });
 
-  $('.roundButton').on('click', function(e) {
-    fireHideAllMenusEvent();
+  $('.roundButton').on('click', () => {
+    // fireHideAllMenusEvent();
   });
 
-  // Activating the print functionality
-  $('#printButton').on('click', function(e) {
+  $('#printButton').on('click', () => {
     window.print();
   });
 
@@ -162,54 +162,54 @@ $(document).ready(function() {
   initSearch();
 });
 
-function showSearchPanel(e) {
-  //$('#searchToolbar').slideDown(500);
+function showSearchPanel() {
+  // $('#searchToolbar').slideDown(500);
   $('#searchToolbar').show();
   $('#searchBox').val('');
   $('#searchBox').focus();
 }
 
 function cancelSearch() {
-  //$('#searchToolbar').slideUp(500);
-  //$('#htmlContent').unhighlight();
+  // $('#searchToolbar').slideUp(500);
+  // $('#htmlContent').unhighlight();
   $('#searchToolbar').hide();
-  //$('#searchBox').hide();
+  // $('#searchBox').hide();
 }
 
 function initSearch() {
-  $('#findInFile').on('click', function() {
+  $('#findInFile').on('click', () => {
     showSearchPanel();
   });
 
-  $('#searchExtButton').on('click', function() {
+  $('#searchExtButton').on('click', () => {
     doSearch();
   });
 
-  $('#clearSearchExtButton').on('click', function(e) {
+  $('#clearSearchExtButton').on('click', () => {
     cancelSearch();
   });
 
-  $('#searchBox').keyup(function(e) {
+  $('#searchBox').keyup((e) => {
     if (e.keyCode === 13) {
       // Start the search on ENTER
       doSearch();
     }
   });
 
-  $(window).keyup(function(e) {
-    if (e.keyCode == 27) {
+  $(window).keyup((e) => {
+    if (e.keyCode === 27) {
       // Hide search on ESC
       cancelSearch();
     }
   });
   //
-  //Mousetrap.bind(['command+f', 'ctrl+f'], function(e) {
+  // Mousetrap.bind(['command+f', 'ctrl+f'], function(e) {
   //  showSearchPanel();
   //  return false;
-  //});
-  window.addEventListener('keyup', function keyup(evt) {
-    var handled = false;
-    var cmd =
+  // });
+  window.addEventListener('keyup', (evt) => {
+    let handled = false;
+    const cmd =
       (evt.ctrlKey ? 1 : 0) |
       (evt.altKey ? 2 : 0) |
       (evt.shiftKey ? 4 : 0) |
@@ -276,40 +276,40 @@ function initSearch() {
 }
 
 function doSearch() {
-  //$('#htmlContent').unhighlight();
+  // $('#htmlContent').unhighlight();
   $('#searchBox').attr('placeholder', 'Search');
-  var givenString = document.getElementById('searchBox').value;
+  const givenString = document.getElementById('searchBox').value;
 
-  var selector = $('#htmlContent') || 'body';
-  var caseSensitiveString = $('#htmlContent').highlight(givenString, {
+  const selector = $('#htmlContent') || 'body';
+  const caseSensitiveString = $('#htmlContent').highlight(givenString, {
     wordsOnly: false
   });
-  var found, getSelection;
+  let found;
 
   if (window.find) {
     // Firefox, Google Chrome, Safari
     found = window.find(givenString);
     $('#htmlContent').highlight(givenString, { wordsOnly: false });
 
-    var searchTermRegEx = new RegExp(found, 'ig');
-    var matches = $(selector)
+    const searchTermRegEx = new RegExp(found, 'ig');
+    const matches = $(selector)
       .text()
       .match(searchTermRegEx);
     if (matches) {
       if ($('.highlight:first').length) {
-        //if match found, scroll to where the first one appears
-        //$(window).animate({scrollTo:($("*:contains('"+ givenString +"')").offset().top)},"fast");
-        //$(selector).animate({scrollTop: $('#htmlContent .highlight::selection').offset().top}, "fast");
-        //window.find(givenString);
-        //$(window).animate({scrollTop: window.find(givenString)}, "fast");
+        // if match found, scroll to where the first one appears
+        // $(window).animate({scrollTo:($("*:contains('"+ givenString +"')").offset().top)},"fast");
+        // $(selector).animate({scrollTop: $('#htmlContent .highlight::selection').offset().top}, "fast");
+        // window.find(givenString);
+        // $(window).animate({scrollTop: window.find(givenString)}, "fast");
       }
     }
     if (!found || (!found && !caseSensitiveString) || !caseSensitiveString) {
-      var topOfContent = $(selector).animate(
+      const topOfContent = $(selector).animate(
         { scrollTop: $('#htmlContent').offset().top },
         'fast'
       );
-      //$('#htmlContent').unhighlight();
+      // $('#htmlContent').unhighlight();
       $('#searchBox').val('');
       $('#searchBox').attr('placeholder', 'Search text not found. Try again.');
       return topOfContent;
