@@ -42,3 +42,6 @@ libs/marked/bin/
 libs/marked/doc/
 libs/marked/man/
 libs/marked/lib/
+libs/**/*.slim.js
+libs/**/*.slim.min.js
+libs/**/*.slim.min.map
