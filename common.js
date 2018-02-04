@@ -11,6 +11,7 @@ const isWeb =
   document.URL.startsWith('http') &&
   !document.URL.startsWith('http://localhost:1212/');
 const isWin = navigator.appVersion.includes('Win');
+const isElectron = (navigator.userAgent.toLowerCase().indexOf(' electron/') > -1);
 
 function getParameterByName(paramName) {
   const name = paramName.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
