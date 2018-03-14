@@ -1,9 +1,8 @@
 /* Copyright (c) 2013-present The TagSpaces Authors.
  * Use of this source code is governed by the MIT license which can be found in the LICENSE.txt file. */
 
-/* globals marked, sendToParent, $, i18next */
+/* globals marked, sendToParent, $, i18next, jqueryI18next */
 
-'use strict';
 
 const isCordova = document.URL.indexOf('file:///android_asset') === 0; // TODO consider ios case
 // isCordovaiOS: /^file:\/{3}[^\/]/i.test(window.location.href) && /ios|iphone|ipod|ipad/i.test(navigator.userAgent),
@@ -52,8 +51,8 @@ function initI18N(locale, filename) {
         resources: {},
         fallbackLng: 'en_US'
       };
-      i18noptions.resources['en_US'] = {};
-      i18noptions.resources['en_US'].translation = JSON.parse(enLocale);
+      i18noptions.resources.en_US = {};
+      i18noptions.resources.en_US.translation = JSON.parse(enLocale);
       getFileContentPromise('./locales/' + locale + '/' + filename, 'text')
         .then(content => {
           i18noptions.resources[locale] = {};
@@ -222,67 +221,68 @@ function initSearch() {
     if (cmd === 1 || cmd === 8 || cmd === 5 || cmd === 12) {
       // either CTRL or META key with optional SHIFT.
       switch (evt.keyCode) {
-        case 70: // f
-          //open custom search/find text
-          handled = true;
-          break;
-        case 71: //g
-          //find next
-          handled = true;
-          break;
-        case 61: // FF/Mac "="
-        case 107: // FF "+" and "="
-        case 187: // Chrome "+"
-        case 171: // FF with German keyboard
-          //zoom in
-          handled = true;
-          break;
-        case 173: // FF/Mac "-"
-        case 109: // FF "-"
-        case 189: // Chrome "-"
-          //zoom out
-          handled = true;
-          break;
+      case 70: // f
+        // open custom search/find text
+        handled = true;
+        break;
+      case 71: // g
+        // find next
+        handled = true;
+        break;
+      case 61: // FF/Mac "="
+      case 107: // FF "+" and "="
+      case 187: // Chrome "+"
+      case 171: // FF with German keyboard
+        // zoom in
+        handled = true;
+        break;
+      case 173: // FF/Mac "-"
+      case 109: // FF "-"
+      case 189: // Chrome "-"
+        // zoom out
+        handled = true;
+        break;
+      default: handled = false;
       }
     }
 
     // CTRL or META without shift
     if (cmd === 1 || cmd === 8) {
       switch (evt.keyCode) {
-        case 70: // f
-          showSearchPanel(); //open custom search/find text
-          handled = true;
-          break;
+      case 70: // f
+        showSearchPanel(); // open custom search/find text
+        handled = true;
+        break;
+      default: handled = false;
       }
     }
 
     // CTRL+ALT or Option+Command
     if (cmd === 3 || cmd === 10) {
       switch (evt.keyCode) {
-        case 80: //p
-          //presentaion mode
-          handled = true;
-          break;
-        case 71: //g
-          //focus page number dialoge
-          handled = true;
-          break;
+      case 80: // p
+        // presentaion mode
+        handled = true;
+        break;
+      case 71: // g
+        // focus page number dialoge
+        handled = true;
+        break;
+      default: handled = false;
       }
     }
     if (handled) {
       evt.preventDefault();
-      return;
     }
   });
 }
 
 function doSearch() {
-  // $('#htmlContent').unhighlight();
   $('#searchBox').attr('placeholder', 'Search');
   const givenString = document.getElementById('searchBox').value;
 
-  const selector = $('#htmlContent') || 'body';
-  const caseSensitiveString = $('#htmlContent').highlight(givenString, {
+  const selector = $(document.body);
+  const caseSensitiveString = $(document.body).highlight(givenString, {
     wordsOnly: false
   });
   let found;
@@ -290,7 +290,7 @@ function doSearch() {
   if (window.find) {
     // Firefox, Google Chrome, Safari
     found = window.find(givenString);
-    $('#htmlContent').highlight(givenString, { wordsOnly: false });
+    $(document.body).highlight(givenString, { wordsOnly: false });
 
     const searchTermRegEx = new RegExp(found, 'ig');
     const matches = $(selector)
@@ -307,7 +307,7 @@ function doSearch() {
     }
     if (!found || (!found && !caseSensitiveString) || !caseSensitiveString) {
       const topOfContent = $(selector).animate(
-        { scrollTop: $('#htmlContent').offset().top },
+        { scrollTop: $(document.body).offset().top },
         'fast'
       );
       // $('#htmlContent').unhighlight();
