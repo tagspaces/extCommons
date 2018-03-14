@@ -171,9 +171,9 @@ function showSearchPanel() {
 
 function cancelSearch() {
   // $('#searchToolbar').slideUp(500);
-  // $('#htmlContent').unhighlight();
+  $(document.body).unhighlight();
   $('#searchToolbar').hide();
-  // $('#searchBox').hide();
+  $('#searchBox').hide();
 }
 
 function initSearch() {
@@ -278,6 +278,7 @@ function initSearch() {
 }
 
 function doSearch() {
+  $(document.body).unhighlight();
   $('#searchBox').attr('placeholder', 'Search');
   const givenString = document.getElementById('searchBox').value;
 
