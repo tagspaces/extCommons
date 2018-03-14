@@ -311,7 +311,6 @@ function doSearch() {
         { scrollTop: $(document.body).offset().top },
         'fast'
       );
-      // $('#htmlContent').unhighlight();
       $('#searchBox').val('');
       $('#searchBox').attr('placeholder', 'Search text not found. Try again.');
       return topOfContent;
