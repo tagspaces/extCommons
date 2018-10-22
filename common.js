@@ -6,9 +6,12 @@
 
 const isCordova = document.URL.indexOf('file:///android_asset') === 0; // TODO consider ios case
 // isCordovaiOS: /^file:\/{3}[^\/]/i.test(window.location.href) && /ios|iphone|ipod|ipad/i.test(navigator.userAgent),
+
+const filePath = getParameterByName('file');
 const isWeb =
-  document.URL.startsWith('http') &&
-  !document.URL.startsWith('http://localhost:1212/');
+  (document.URL.startsWith('http') &&
+  !document.URL.startsWith('http://localhost:1212/')) ||
+  filePath.startsWith('http');
 const isWin = navigator.appVersion.includes('Win');
 const isElectron = (navigator.userAgent.toLowerCase().indexOf(' electron/') > -1);
 
