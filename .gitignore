@@ -39,9 +39,10 @@ libs/bootswatch/yeti/
 libs/jquery/external/
 libs/jquery-i18next/example/
 libs/marked/bin/
-libs/marked/doc/
+libs/marked/docs/
 libs/marked/man/
 libs/marked/lib/
+libs/marked/jasmine.json
 libs/**/*.slim.js
 libs/**/*.slim.min.js
 libs/**/*.slim.min.map
