@@ -115,6 +115,7 @@ $(document).ready(() => {
   } */
 
   // Init about box functionality
+  const modalBody = $('#aboutExtensionModal .modal-body');
   $('#aboutExtensionModal').on('show.bs.modal', () => {
     $.ajax({
       url: 'README.md',
@@ -123,7 +124,6 @@ $(document).ready(() => {
       .done(mdData => {
         // console.log("DATA: " + mdData);
         if (marked) {
-          const modalBody = $('#aboutExtensionModal .modal-body');
           modalBody.html(marked(mdData, { sanitize: true }));
           handleLinks(modalBody);
         } else {
@@ -131,6 +131,7 @@ $(document).ready(() => {
         }
       })
       .fail(data => {
+        handleLinks(modalBody);
         console.warn('Loading file failed ' + data);
       });
   });
