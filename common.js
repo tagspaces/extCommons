@@ -3,7 +3,6 @@
 
 /* globals marked, sendToParent, $, i18next, jqueryI18next */
 
-
 const isCordova = document.URL.indexOf('file:///android_asset') === 0; // TODO consider ios case
 // isCordovaiOS: /^file:\/{3}[^\/]/i.test(window.location.href) && /ios|iphone|ipod|ipad/i.test(navigator.userAgent),
 
@@ -19,9 +18,11 @@ function getParameterByName(paramName) {
   const name = paramName.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
   const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
   const results = regex.exec(location.search);
-  return results === null
-    ? ''
-    : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  let param = (results === null) ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  if (param.includes('#')) {
+    param = param.split('#').join('%23');
+  }
+  return param;
 }
 
 function getFileContentPromise(fullPath, type) {
