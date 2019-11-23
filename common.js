@@ -158,6 +158,7 @@ $(document).ready(() => {
 
   $('#printButton').on('click', () => {
     window.print();
+    return true;
   });
 
   if (isCordova) {
