@@ -3,22 +3,31 @@
 
 /* globals marked, sendToParent, $, i18next, jqueryI18next */
 
+// window.addEventListener('beforeunload', function(e) {
+//   console.log('Unloading: ' + JSON.stringify(e));
+//   // Cancel the event
+//   // e.preventDefault();
+//   // Chrome requires returnValue to be set
+//   e.returnValue = 'Do you really want to leave this page?';
+// });
+
 const isCordova = document.URL.indexOf('file:///android_asset') === 0; // TODO consider ios case
 // isCordovaiOS: /^file:\/{3}[^\/]/i.test(window.location.href) && /ios|iphone|ipod|ipad/i.test(navigator.userAgent),
 
 const pathToFile = getParameterByName('file');
 const isWeb =
   (document.URL.startsWith('http') &&
-  !document.URL.startsWith('http://localhost:1212/')) ||
+    !document.URL.startsWith('http://localhost:1212/')) ||
   pathToFile.startsWith('http');
 const isWin = navigator.appVersion.includes('Win');
-const isElectron = (navigator.userAgent.toLowerCase().indexOf(' electron/') > -1);
+const isElectron = navigator.userAgent.toLowerCase().indexOf(' electron/') > -1;
 
 function getParameterByName(paramName) {
   const name = paramName.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
   const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
   const results = regex.exec(location.search);
-  let param = (results === null) ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  let param =
+    results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
   if (param.includes('#')) {
     param = param.split('#').join('%23');
   }
@@ -195,14 +204,14 @@ function initSearch() {
     cancelSearch();
   });
 
-  $('#searchBox').keyup((e) => {
+  $('#searchBox').keyup(e => {
     if (e.keyCode === 13) {
       // Start the search on ENTER
       doSearch();
     }
   });
 
-  $(window).keyup((e) => {
+  $(window).keyup(e => {
     if (e.keyCode === 27) {
       // Hide search on ESC
       cancelSearch();
@@ -213,7 +222,7 @@ function initSearch() {
   //  showSearchPanel();
   //  return false;
   // });
-  window.addEventListener('keyup', (evt) => {
+  window.addEventListener('keyup', evt => {
     let handled = false;
     const cmd =
       (evt.ctrlKey ? 1 : 0) |
@@ -227,54 +236,57 @@ function initSearch() {
     if (cmd === 1 || cmd === 8 || cmd === 5 || cmd === 12) {
       // either CTRL or META key with optional SHIFT.
       switch (evt.keyCode) {
-      case 70: // f
-        // open custom search/find text
-        handled = true;
-        break;
-      case 71: // g
-        // find next
-        handled = true;
-        break;
-      case 61: // FF/Mac "="
-      case 107: // FF "+" and "="
-      case 187: // Chrome "+"
-      case 171: // FF with German keyboard
-        // zoom in
-        handled = true;
-        break;
-      case 173: // FF/Mac "-"
-      case 109: // FF "-"
-      case 189: // Chrome "-"
-        // zoom out
-        handled = true;
-        break;
-      default: handled = false;
+        case 70: // f
+          // open custom search/find text
+          handled = true;
+          break;
+        case 71: // g
+          // find next
+          handled = true;
+          break;
+        case 61: // FF/Mac "="
+        case 107: // FF "+" and "="
+        case 187: // Chrome "+"
+        case 171: // FF with German keyboard
+          // zoom in
+          handled = true;
+          break;
+        case 173: // FF/Mac "-"
+        case 109: // FF "-"
+        case 189: // Chrome "-"
+          // zoom out
+          handled = true;
+          break;
+        default:
+          handled = false;
       }
     }
 
     // CTRL or META without shift
     if (cmd === 1 || cmd === 8) {
       switch (evt.keyCode) {
-      case 70: // f
-        showSearchPanel(); // open custom search/find text
-        handled = true;
-        break;
-      default: handled = false;
+        case 70: // f
+          showSearchPanel(); // open custom search/find text
+          handled = true;
+          break;
+        default:
+          handled = false;
       }
     }
 
     // CTRL+ALT or Option+Command
     if (cmd === 3 || cmd === 10) {
       switch (evt.keyCode) {
-      case 80: // p
-        // presentaion mode
-        handled = true;
-        break;
-      case 71: // g
-        // focus page number dialoge
-        handled = true;
-        break;
-      default: handled = false;
+        case 80: // p
+          // presentaion mode
+          handled = true;
+          break;
+        case 71: // g
+          // focus page number dialoge
+          handled = true;
+          break;
+        default:
+          handled = false;
       }
     }
     if (handled) {
