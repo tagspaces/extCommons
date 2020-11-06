@@ -146,17 +146,6 @@ $(document).ready(() => {
       });
   });
 
-  function handleLinks($element) {
-    $element.find('a[href]').each((index, link) => {
-      const currentSrc = $(link).attr('href');
-      $(link).bind('click', e => {
-        e.preventDefault();
-        const msg = { command: 'openLinkExternally', link: currentSrc };
-        sendMessageToHost(msg);
-      });
-    });
-  }
-
   $('#aboutButton').on('click', () => {
     $('#aboutExtensionModal').modal({ show: true });
   });
@@ -176,6 +165,19 @@ $(document).ready(() => {
 
   initSearch();
 });
+
+function handleLinks($element) {
+  $element.find('a[href]').each((index, link) => {
+    const currentSrc = $(link).attr('href');
+    $(link)
+      .off('click')
+      .on('click', e => {
+        e.preventDefault();
+        const msg = { command: 'openLinkExternally', link: currentSrc };
+        sendMessageToHost(msg);
+      });
+  });
+}
 
 function showSearchPanel() {
   // $('#searchToolbar').slideDown(500);
@@ -217,11 +219,7 @@ function initSearch() {
       cancelSearch();
     }
   });
-  //
-  // Mousetrap.bind(['command+f', 'ctrl+f'], function(e) {
-  //  showSearchPanel();
-  //  return false;
-  // });
+
   window.addEventListener('keyup', evt => {
     let handled = false;
     const cmd =
