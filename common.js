@@ -169,13 +169,12 @@ $(document).ready(() => {
 function handleLinks($element) {
   $element.find('a[href]').each((index, link) => {
     const currentSrc = $(link).attr('href');
-    $(link)
-      .off('click')
-      .on('click', e => {
-        e.preventDefault();
-        const msg = { command: 'openLinkExternally', link: currentSrc };
-        sendMessageToHost(msg);
-      });
+    $(link).off('click');
+    $(link).on('click', e => {
+      e.preventDefault();
+      const msg = { command: 'openLinkExternally', link: currentSrc };
+      sendMessageToHost(msg);
+    });
   });
 }
 
