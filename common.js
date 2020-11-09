@@ -114,16 +114,6 @@ $(document).ready(() => {
     event.preventDefault();
   });
 
-  // Hide all menus in TS on click in extension
-  /* $(document).on('click', function(event) {
-    fireHideAllMenusEvent();
-  });
-
-  function fireHideAllMenusEvent() {
-    var msg = { command: 'hideAllMenus' };
-    sendMessageToHost(msg);
-  } */
-
   // Init about box functionality
   const modalBody = $('#aboutExtensionModal .modal-body');
   $('#aboutExtensionModal').on('show.bs.modal', () => {
@@ -146,14 +136,12 @@ $(document).ready(() => {
       });
   });
 
+  $('#aboutButton').off();
   $('#aboutButton').on('click', () => {
     $('#aboutExtensionModal').modal({ show: true });
   });
 
-  $('.roundButton').on('click', () => {
-    // fireHideAllMenusEvent();
-  });
-
+  $('#printButton').off();
   $('#printButton').on('click', () => {
     window.print();
     return true;
@@ -169,7 +157,7 @@ $(document).ready(() => {
 function handleLinks($element) {
   $element.find('a[href]').each((index, link) => {
     const currentSrc = $(link).attr('href');
-    $(link).off('click');
+    $(link).off();
     $(link).on('click', e => {
       e.preventDefault();
       const msg = { command: 'openLinkExternally', link: currentSrc };
@@ -193,14 +181,17 @@ function cancelSearch() {
 }
 
 function initSearch() {
+  $('#findInFile').off();
   $('#findInFile').on('click', () => {
     showSearchPanel();
   });
 
+  $('#searchExtButton').off();
   $('#searchExtButton').on('click', () => {
     doSearch();
   });
 
+  $('#clearSearchExtButton').off();
   $('#clearSearchExtButton').on('click', () => {
     cancelSearch();
   });
