@@ -1,18 +1,20 @@
-html, body {
-	width: 100%;
-	height: 100%;
-	padding: 0;
-	margin: 0;
-	overflow: hidden;
-	font-size: 9px;
-	font-family: Ubuntu, Geneva, Arial, Helvetica, sans-serif;
+html,
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  font-size: 9px;
+  background-color: transparent;
+  font-family: Ubuntu, Geneva, Arial, Helvetica, sans-serif;
 }
 
 /* Removes the selection border on ui elements on android */
 * {
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-touch-callout: none;
-  tap-highlight-color: rgba(0,0,0,0);
+  tap-highlight-color: rgba(0, 0, 0, 0);
   touch-callout: none;
 }
 
@@ -24,27 +26,29 @@ html, body {
 
 /* Custom scrollbars for chrome */
 ::-webkit-scrollbar-track {
-   background-color: transparent;
+  background-color: transparent;
 }
 
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: #bbb;
 }
 
-* { outline:none; }
+* {
+  outline: none;
+}
 
 .disabled {
   color: lightgray;
 }
 
 .noWrap {
-  white-space:nowrap !important;
+  white-space: nowrap !important;
 }
 
 .forceWrap {
@@ -58,12 +62,15 @@ li hr {
 
 /* Bootstrap Styles */
 
-.btn, .btn:hover, .btn:focus, .btn:active {
+.btn,
+.btn:hover,
+.btn:focus,
+.btn:active {
   outline: none !important;
   outline-color: initial !important;
   outline-style: none !important;
   outline-width: initial !important;
-/*  background-image: none;
+  /*  background-image: none;
   border-radius: 0;
   text-transform: none;
   -webkit-transition: none;
@@ -72,7 +79,10 @@ li hr {
   transform: none;*/
 }
 
-.btn-link, .btn-link:hover, .btn-link:focus, .btn-link:active {
+.btn-link,
+.btn-link:hover,
+.btn-link:focus,
+.btn-link:active {
   background-color: transparent;
   outline: none !important;
   background-image: none !important;
@@ -84,7 +94,8 @@ li hr {
   transform: none;
 }
 
-.btn-link:hover, .btn-link:active {
+.btn-link:hover,
+.btn-link:active {
   color: black;
 }
 
@@ -107,7 +118,7 @@ li hr {
 }
 
 .modal-body {
-	font-size: 14px;
+  font-size: 14px;
   padding-bottom: 0;
 }
 
@@ -186,7 +197,6 @@ li hr {
     margin-bottom: 4px !important;
   }
 
-
   .fullScreenMobile .modal-content {
     height: 100%;
     border-radius: 0;
@@ -194,12 +204,12 @@ li hr {
 }
 
 .modal-header {
-  background-color: #F6F6F6;
+  background-color: #f6f6f6;
   border-radius: 5px 5px 0px 0px;
 }
 
 .modal-footer {
-  background-color: #F6F6F6;
+  background-color: #f6f6f6;
 }
 
 .modal-header .close {
@@ -214,7 +224,6 @@ button.close {
 .dropdown-header {
   margin-top: 6px;
 }
-
 
 .dropdown-menu {
   min-width: 200px;
@@ -236,27 +245,26 @@ button.close {
 }
 
 .navbar {
-	border-radius: 0 !important;
-	border: 0;
-	border-bottom: 1px;
+  border-radius: 0 !important;
+  border: 0;
+  border-bottom: 1px;
 }
 
 .btn-toolbar {
-	min-height: 40px;
+  min-height: 40px;
 }
 
 .dropdown-menu .divider {
-  background-color: #FAFAFA;
+  background-color: #fafafa;
 }
 
 .dropdown {
   position: absolute;
-  display:none;
+  display: none;
   z-index: 10000;
 }
 
-@media
-(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   #welcomeScreen {
     width: 100%;
     height: 100%;
@@ -268,7 +276,7 @@ button.close {
 /* Used in the tours for hapscotch  */
 
 .uiEmphasizer {
-  border: 3px dashed #1DD19F;
+  border: 3px dashed #1dd19f;
 }
 
 div.hopscotch-bubble {
@@ -276,9 +284,7 @@ div.hopscotch-bubble {
 }
 /* END Used in the tours for hapscotch  */
 
-
-@media (-webkit-min-device-pixel-ratio: 2),
-(min-resolution: 192dpi) {
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .appBackgroundTile {
     background-image: url('background@2x.png');
     background-repeat: repeat;
@@ -299,8 +305,8 @@ label.control-label {
 }
 
 .shortcutKey {
-  background-color: #D6D6D6;
-  font: "Console";
+  background-color: #d6d6d6;
+  font: 'Console';
   font-family: monospace;
   padding: 5px;
   border-radius: 5px;
